@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.19.1",
     "firebase": "^7.6.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -19,11 +20,13 @@
     "redux-first-router-link": "^2.1.1",
     "sweetalert2-react": "^0.8.3"
   },
+  "proxy":"https://api.twitter.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+    
   },
   "eslintConfig": {
     "extends": "react-app"
