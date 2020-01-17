@@ -80,13 +80,15 @@ function App() {
 
             </Hidden>
             
-            <Hidden lgUp>
+            <Hidden lgUp style={{display: 'grid'}}>
               <BottomNavigation style={{
                 width: '100%',
                 position: 'fixed',
                 left: 0,
                 bottom: 0,
-                backgroundColor: '#EEEEEE'
+                backgroundColor: '#EEEEEE',
+                zIndex:999,
+                
 
               }}>
                 <BottomNavigationAction onClick={() => history.push("/")} label="Main" icon={<Home />} />
