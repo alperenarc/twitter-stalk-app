@@ -11,22 +11,23 @@
     "axios": "^0.19.1",
     "firebase": "^7.6.1",
     "react": "^16.12.0",
+    "react-bottom-scroll-listener": "^3.0.0",
     "react-dom": "^16.12.0",
     "react-firebaseui": "^4.0.0",
     "react-redux": "^7.1.3",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
+    "react-spinners": "^0.8.0",
     "redux": "^4.0.5",
     "redux-first-router-link": "^2.1.1",
     "sweetalert2-react": "^0.8.3"
   },
-  "proxy":"https://api.twitter.com",
+  "proxy": "https://api.twitter.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-    
   },
   "eslintConfig": {
     "extends": "react-app"

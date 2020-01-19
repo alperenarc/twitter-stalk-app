@@ -32,10 +32,7 @@ function Inspect() {
     return (
         <div>
             {
-                isLogged ?
-
-
-
+                
 
                     <div className={classes.root}>
                         <Grid container spacing={1}>
@@ -153,16 +150,6 @@ function Inspect() {
 
 
 
-
-                    :
-                    <div>
-                        <Login />
-                        <SweetAlert
-                            show={!isLogged}
-                            title="Giriş Yapınız !"
-                            text="Bu sayfaya erişmek için önce giriş yapmanız gerekmektedir."
-                        />
-                    </div>
 
 
             }
