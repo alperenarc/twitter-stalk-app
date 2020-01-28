@@ -1,9 +1,5 @@
-import React, { Component, useState } from 'react'
-import app, { auth } from 'firebase/app'
-import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
-import followerArray from './actions/followerArray'
-import { useCallback } from 'react'
+import { Component } from 'react'
+import { auth } from 'firebase/app'
 import 'firebase/auth'
 require('firebase/auth')
 //const fArray = useSelector(state => state.followerArray)
@@ -21,7 +17,7 @@ class Firebase extends Component {
         }
     }
     get(){
-        console.log(localStorage.getItem('notFollowYouProviderData').split('split')[23])
+        //console.log(localStorage.getItem('notFollowYouProviderData').split('split')[23])
     }
     async getDifference() {
         const id = auth().currentUser.providerData[0].uid
@@ -52,11 +48,11 @@ class Firebase extends Component {
             !this.state.followers.some(item2 => (item2 === item1)))
         var youNotFollow = this.state.followers.filter(item1 =>
             !this.state.friends.some(item2 => (item2 === item1)))
-        localStorage.setItem('notFollowYou', notFollowYou)
-        localStorage.setItem('youNotFollow', youNotFollow)
+        //localStorage.setItem('notFollowYou', notFollowYou)
+        //localStorage.setItem('youNotFollow', youNotFollow)
 
 
-        for (var i = 0; i < notFollowYou.length; i++) {
+        for (var i = 0; i < 5; i++) {
 
             await fetch("/1.1/users/show.json?user_id=" + notFollowYou[i] + "", {
                 headers: {
@@ -64,14 +60,14 @@ class Firebase extends Component {
                 }
             }).then(response => response.json())
                 .then(data => {
-                    if (data.id == undefined) {
+                    if (data.id === undefined) {
 
                     } else {
                         const user = [{
-                            id: 'split'+data.id+'split',
-                            name: 'split'+data.name+'split',
-                            screenName: 'split'+data.screen_name+'split',
-                            photo: 'split'+data.profile_image_url_https.replace('_normal', '')+'split'
+                            id: data.id,
+                            name: data.name,
+                            screenName: data.screen_nam,
+                            photo: data.profile_image_url_https.replace('_normal', '')
 
                         }]
                         this.state.listedUser = this.state.listedUser.concat(user)
@@ -81,10 +77,10 @@ class Firebase extends Component {
                     console.log('hata')
                 })
         }
-        localStorage.setItem('notFollowYouProviderData', JSON.stringify(this.state.listedUser))
+       // localStorage.setItem('notFollowYouProviderData', JSON.stringify(this.state.listedUser))
         console.log(this.state.listedUser)
         console.log('finish')
-        console.log(localStorage.getItem('notFollowYouProviderData'))
+        //console.log(localStorage.getItem('notFollowYouProviderData'))
 
         
     }

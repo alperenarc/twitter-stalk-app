@@ -5,9 +5,8 @@ import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button';
-import { BeatLoader } from "react-spinners";
-import { useBottomScrollListener } from 'react-bottom-scroll-listener';
+import Button from '@material-ui/core/Button'
+import { BeatLoader } from "react-spinners"
 
 var id = ''
 var cursor = -1
@@ -71,7 +70,7 @@ class MyFollowers extends Component {
                 }
             }).then(response => response.json())
                 .then(data => {
-                    if (data.next_cursor == 0) {
+                    if (data.next_cursor === 0) {
                         this.setState({ isLoading: false })
                         this.setState({ over: true })
                     } else {
@@ -98,7 +97,7 @@ class MyFollowers extends Component {
 
     handleScroll(event) {
 
-        if ((window.innerHeight + window.scrollY) == document.body.offsetHeight) {
+        if ((window.innerHeight + window.scrollY) === document.body.offsetHeight) {
             console.log('handle')
             this.get()
         }
@@ -107,17 +106,21 @@ class MyFollowers extends Component {
 
         const { hits, isLoading, over } = this.state;
         const { classes } = this.props
+        const showMoreData = () =>{
+            console.log('handle')
+            this.get()
+        }
         return (
             <div className={classes.root}>
                 <Grid container spacing={1}>
                     {hits.map(hit =>
-                        <Grid key={hit.id} item xs={12} sm={4}>
+                        <Grid key={hit.id} item xs={12} sm={6}>
                             <Paper className={classes.paper}>
                                 <Grid container>
                                     <Grid container justify='center' item xs={3} sm={3}>
                                         <Avatar alt={hit.name} className={classes.large} src={hit.profile_image_url_https.replace('_normal', '')} />
                                     </Grid>
-                                    <Grid container item xs={5} sm={5}>
+                                    <Grid container item xs={9} sm={9}>
                                         <Grid textAlign='left' item xs={12} sm={12}>
                                             <Typography align='left' variant="body1">
                                                 {hit.name}
@@ -127,30 +130,26 @@ class MyFollowers extends Component {
                                             </Typography>
                                         </Grid>
                                     </Grid>
-                                    <Grid container item xs={4} sm={4}>
-                                        <Grid textAlign='left' item xs={12} sm={12}>
-                                            <Button variant="contained" className={classes.button} >
-                                                Following
-                                            </Button>
-                                        </Grid>
-                                    </Grid>
                                 </Grid>
                             </Paper>
                         </Grid>
                     )}
                 </Grid>
+                <Button variant="contained" onClick={showMoreData} style={{ marginTop: '5px' }} className={classes.button} >
+                    Show More Data
+                </Button>
                 {
                     over ? '' : isLoading ? ''
-                        : <Grid style={{marginBottom:'10%'}} alignContent='center' justify='center' alignItems='center' xs={12} sm={12}>
-                        <Typography align='center'>
-                            <BeatLoader
-                                className={classes.loading}
-                                size={10}
-                                color={"#1DA1F2"}
-                                loading={this.state.isLoading}
-                            />
-                        </Typography>
-                    </Grid> }
+                        : <Grid style={{ marginBottom: '10%' }} alignContent='center' justify='center' alignItems='center' xs={12} sm={12}>
+                            <Typography align='center'>
+                                <BeatLoader
+                                    className={classes.loading}
+                                    size={10}
+                                    color={"#1DA1F2"}
+                                    loading={this.state.isLoading}
+                                />
+                            </Typography>
+                        </Grid>}
             </div>
         );
     }

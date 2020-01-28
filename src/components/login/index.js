@@ -3,10 +3,7 @@ import firebase from 'firebase'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import { useDispatch } from 'react-redux'
 import login from '../actions/login'
-
-import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import Link from '@material-ui/core/Link'
 import Paper from '@material-ui/core/Paper'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -111,7 +108,7 @@ function Login() {
                                 <Typography align="center" component="h5" variant="h5">
                                     MOBIL PLATFORMLAR
                         </Typography>
-                                <Typography align="center" component="p" variant="p">
+                                <Typography align="center">
                                     Twitter Stalk App Uygulamasını Hemen Edinebilirsiniz. Takip etmek istediğiniz kişiyi seçin ve anında analize başlayın. Ayrıca kendi profilinize ait analizlere de rahatlıkla ulaşabilirsiniz.
                         </Typography>
                             </Box>
@@ -119,10 +116,10 @@ function Login() {
                                 <Grid container component="main">
 
                                     <Grid item xs={12} sm={6} md={6}>
-                                        <img className={classes.mobile} src="https://svgshare.com/i/HJS.svg" />
+                                        <img alt='alt' className={classes.mobile} src="https://svgshare.com/i/HJS.svg" />
                                     </Grid>
                                     <Grid item xs={12} sm={6} md={6}>
-                                        <img className={classes.mobile} src="https://svgshare.com/getbyhash/sha1-v5r+glPIeE6d10lo7SWpLpBRjMs=" />
+                                        <img alt='alt' className={classes.mobile} src="https://svgshare.com/getbyhash/sha1-v5r+glPIeE6d10lo7SWpLpBRjMs=" />
                                     </Grid>
 
                                 </Grid>

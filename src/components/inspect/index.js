@@ -1,13 +1,11 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import Login from '../login'
-import SweetAlert from 'sweetalert2-react'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
-import { PeopleAlt, Person, Search, Home, ArrowBack } from '@material-ui/icons'
+import { PeopleAlt, Person } from '@material-ui/icons'
+
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
@@ -27,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Inspect() {
-    const isLogged = useSelector(state => state.isLogged)
+   // const isLogged = useSelector(state => state.isLogged)
     const classes = useStyles();
     return (
         <div>

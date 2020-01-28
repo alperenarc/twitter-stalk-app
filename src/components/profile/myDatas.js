@@ -1,24 +1,24 @@
 import React, { Component } from 'react'
 import { auth } from 'firebase/app'
 import { withStyles } from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
-
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
-import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
-import Button from '@material-ui/core/Button'
-
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { BeatLoader } from "react-spinners";
-
-var id = ''
+import MyFriends from './myFriends'
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const useStyles = theme => ({
     root: {
@@ -51,11 +51,10 @@ const useStyles = theme => ({
         fontSize: '50%',
         width: '100%',
     },
-    loading: {
+    loadStyle: {
         display: "block",
         margin: "0 auto",
         BorderColor: "red"
-
     },
     card: {
         width: '100%',
@@ -74,6 +73,7 @@ const useStyles = theme => ({
         width: '100%'
     }
 });
+var id = ''
 class MyDatas extends Component {
 
     constructor(props) {
@@ -83,12 +83,15 @@ class MyDatas extends Component {
             hits: [],
             isLoading: false,
             profilePhoto: '',
-            open: false
+            open: false,
+            page: '',
+            openModal: false,
+            scroll: 'paper'
         };
         this.get = this.get.bind(this)
     }
     get() {
-      /*  this.setState({ isLoading: false })
+        this.setState({ isLoading: false })
         fetch("/1.1/users/show.json?user_id=" + id + "", {
             headers: {
                 'Authorization': 'Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA',
@@ -101,7 +104,7 @@ class MyDatas extends Component {
             }).catch(error => {
                 return
             })
-        this.setState({ isLoading: true })*/
+        this.setState({ isLoading: true })
     }
     componentDidMount() {
         this.get()
@@ -114,22 +117,36 @@ class MyDatas extends Component {
         const handleClose = () => {
             this.setState({ open: false });
         };
-
-        const { hits, isLoading, over } = this.state;
+        const listMyFriends = () => {
+            this.setState({ openModal: true })
+            this.setState({ page: 'myfriends' })
+        }
+        const { hits, isLoading } = this.state;
         const { classes } = this.props
+
+
+        const handleClickOpen = scrollType => () => {
+            this.setState({ openModal: true })
+            this.setState({ scroll: scrollType })
+        };
+
+        const handleCloseModal = () => {
+            this.setState({ openModal: false })
+        };
         return (
             <div className={classes.root}>
 
-                {isLoading ? <Grid alignContent='center' justify='center' alignItems='center' xs={12} sm={12}>
-                    <Typography align='center'>
-                        <BeatLoader
-                            className={classes.loading}
-                            size={30}
-                            color={"#1DA1F2"}
-                            loading={this.state.isLoading}
-                        />
-                    </Typography>
-                </Grid>
+                {isLoading ?
+                    <Grid alignContent='center' justify='center' alignItems='center' xs={12} sm={12}>
+                        <Typography align='center'>
+                            <BeatLoader
+                                className={classes.loadStyle}
+                                size={30}
+                                color={"#1DA1F2"}
+                                loading={this.state.isLoading}
+                            />
+                        </Typography>
+                    </Grid>
                     :
 
                     <Grid container spacing={1}>
@@ -140,13 +157,12 @@ class MyDatas extends Component {
                                 <CardActionArea>
                                     <CardMedia
                                         className={classes.media}
-                                        
-                                        image='https://png.pngtree.com/thumb_back/fw800/background/20190222/ourmid/pngtree-orange-and-yellow-gradient-banner-background-imagegradientbackground-image-image_49980.jpg'
+                                        image={hits.profile_banner_url}
                                         title="Contemplative Reptile"
                                     />
                                     <div type="button" onClick={handleOpen}>
-                                        {/*<Avatar alt={hits.name} className={classes.profilePhoto} src={this.state.profilePhoto} />*/}
-                                        <Avatar alt={hits.name} className={classes.profilePhoto} src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png' />
+                                        <Avatar alt={hits.name} className={classes.profilePhoto} src={this.state.profilePhoto} />
+                                        
                                     </div>
                                     <Modal
                                         aria-labelledby="transition-modal-title"
@@ -162,8 +178,8 @@ class MyDatas extends Component {
                                     >
                                         <Fade in={this.state.open}>
                                             <div className={classes.paper}>
-                                                {/*<img className={classes.bigProfilePhoto} src={this.state.profilePhoto} />*/}
-                                                <img className={classes.bigProfilePhoto} src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png' />
+                                                <img alt='alt' className={classes.bigProfilePhoto} src={this.state.profilePhoto} />
+                                                
                                             </div>
                                         </Fade>
                                     </Modal>
@@ -178,21 +194,21 @@ class MyDatas extends Component {
                                 </CardActionArea>
                                 <CardContent>
                                     <Typography align='left' variant="h6">
-                                        {hits.name} Alperen
+                                        {hits.name} 
                                     </Typography>
                                     <Typography align='left' variant="body1">
-                                        @{hits.screen_name} Alperen
+                                        @{hits.screen_name} 
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
-                                        {hits.description} Alperen
+                                        {hits.description} 
                                     </Typography>
                                 </CardContent>
 
 
                                 <CardContent>
                                     <Grid container item xs={12} sm={12}>
-                                        <Typography align='left' variant="body1">
-                                            {hits.friends_count} 100
+                                        <Typography onClick={listMyFriends} style={{cursor:'pointer'}} align='left' variant="body1">
+                                            {hits.friends_count} 
                                             <Typography align='left' variant="body2">
                                                 Following
                                         </Typography>
@@ -200,7 +216,7 @@ class MyDatas extends Component {
                                         </Typography>
 
                                         <Typography style={{ paddingLeft: '5px' }} align='left' variant="body1">
-                                            {hits.followers_count} 100
+                                            {hits.followers_count} 
                                             <Typography align='left' variant="body2">
                                                 Followers
                                         </Typography>
@@ -210,7 +226,39 @@ class MyDatas extends Component {
                             </Card>
                         </Grid>
 
-                    </Grid>}
+                        <Dialog
+                            open={this.state.openModal}
+                            onClose={handleCloseModal}
+                            aria-labelledby="scroll-dialog-title"
+                            aria-describedby="scroll-dialog-description"
+                        >
+                            <DialogTitle id="scroll-dialog-title">Subscribe</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText
+                                    id="scroll-dialog-description"
+                                    tabIndex={-1}
+                                >
+                                    {this.state.page === 'myfriends' ?
+
+
+                                        <MyFriends />
+
+
+
+                                        : 'değil'}
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleCloseModal} color="primary">
+                                    Cancel
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    </Grid>
+
+
+                }
+
             </div>
         );
     }
